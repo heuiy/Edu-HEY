@@ -11,6 +11,21 @@ R Project: (None) (R Studio 우측 상단)
 > 다음에 r 파일이 아닌 프로젝트 오픈 (동일한 실습 환경 유지 가능)
 '''
 
+# ♧♣ Set Working directory ----
+
+
+'''
+예시) 
+setwd("D:/#.Secure Work Folder/GB_Project/GB/DAT")
+
+# getwd() # 현재 working directory 확인 가능
+
+dir() # WD 내의 파일 확인 가능
+# wd 에 (.rds 등) 데이터 파일이 있어야 함
+그래야 데이터 불러올 수 있음
+
+'''
+
 # ♧♣ 특수기호 ----
 
 '''
@@ -118,7 +133,7 @@ Ctrl + Shift + M      # %>% (파이프 연산자)
 
 - 상단 Tools → Global Options → 좌측 Appearance → Editor theme → "Pastel on Dark" or "Monokai"
 '''
-  
+
 # ___________________________----
 
 # ♧♣ 패키지 ----
@@ -180,8 +195,6 @@ install.packages("magrittr")
 # 1. ss.study.ca는  SixSigma library에 속한 함수입니다.
 # 2. ss.study.ca함수를 실행하면 Data의 공정능력 결과를 보여줍니다. 
 
-??study.ca
-
 library(SixSigma)
 Ex2.3=read.table("2.3_Measure_ProcessCapability.txt",header=T) 
 ss.study.ca(xST=Ex2.3$Response, LSL = 15.7, USL = 17.3, Target = 16.5)
@@ -189,8 +202,9 @@ ss.study.ca(xST=Ex2.3$Response, LSL = 15.7, USL = 17.3, Target = 16.5)
 Ex2.3=read.table("2.3_Measure_ProcessCapability.txt",header=T) 
 ss.study.ca(xST=Ex2.3$Response, USL = 17.3, Target = 16.5)
 
+??study.ca
 
-
+??ss.ca.z
 
 #  그래프 분석 ---------------------------------------------------------------
 
@@ -205,6 +219,9 @@ names(x2) =c("A","B","C","D","E","F","G","H","I","M")
 pareto.chart(x2)   
 
 
+??pareto.chart
+
+
 #. 히스토그램(Histograms) ------------------------------------------------------
 # ■  hist는  R에 기본으로 내장되어 있는 함수입니다.
 # ■  hist함수를 실행하면 주어진 데이터를 이용하여 히스토그램의 결과를 보여줍니다. 
@@ -214,9 +231,25 @@ pareto.chart(x2)
 Ex5.2=read.csv("5.2_Analyze_histogram.csv")
 
 # 특성치의 분포는 어떤 형태인가? 
-?hist
 hist(Ex5.2$ppm)
+?hist
 
+op <- par(mfrow = c(2, 2))
+hist(islands)
+utils::str(hist(islands, col = "gray", labels = TRUE))
+
+hist(sqrt(islands), breaks = 12, col = "lightblue", border = "pink")
+##-- For non-equidistant breaks, counts should NOT be graphed unscaled:
+r <- hist(sqrt(islands), breaks = c(4*0:5, 10*3:5, 70, 100, 140),
+          col = "blue1")
+text(r$mids, r$density, r$counts, adj = c(.5, -.5), col = "blue3")
+sapply(r[2:3], sum)
+sum(r$density * diff(r$breaks)) # == 1
+lines(r, lty = 3, border = "purple") # -> lines.histogram(*)
+par(op)
+
+hist(x, freq = FALSE, ylim = c(0, 0.2))
+curve(dchisq(x, df = 4), col = 2, lty = 2, lwd = 2, add = TRUE)
 
 #. 산점도(scatter plot, Relationship) ----------------------------------------------------------
 # ■  plot는  R에 기본으로 내장되어 있는 함수입니다.
@@ -224,12 +257,49 @@ hist(Ex5.2$ppm)
 
 Ex5.4=read.csv("5.4_Analyze_scatter.csv")
 
-?plot
 plot(Ex5.4$weight, Ex5.4$thickness)
 
 plot(Ex5.4$weight,Ex5.4$thickness,xlab="무게",ylab="두께",col=ifelse(Ex5.4$modification=="이전",2,4), pch=19)
 
+?plot
 
+Speed <- cars$speed
+Distance <- cars$dist
+plot(Speed, Distance, panel.first = grid(8, 8),
+     pch = 0, cex = 1.2, col = "blue")
+plot(Speed, Distance,
+     panel.first = lines(stats::lowess(Speed, Distance), lty = "dashed"),
+     pch = 0, cex = 1.2, col = "blue")
+
+## Show the different plot types
+x <- 0:12
+y <- sin(pi/5 * x)
+op <- par(mfrow = c(3,3), mar = .1+ c(2,2,3,1))
+for (tp in c("p","l","b",  "c","o","h",  "s","S","n")) {
+  plot(y ~ x, type = tp, main = paste0("plot(*, type = \"", tp, "\")"))
+  if(tp == "S") {
+    lines(x, y, type = "s", col = "red", lty = 2)
+    mtext("lines(*, type = \"s\", ...)", col = "red", cex = 0.8)
+  }
+}
+par(op)
+
+##--- Log-Log Plot  with  custom axes
+lx <- seq(1, 5, length.out = 41)
+yl <- expression(e^{-frac(1,2) * {log[10](x)}^2})
+y <- exp(-.5*lx^2)
+op <- par(mfrow = c(2,1), mar = par("mar")-c(1,0,2,0), mgp = c(2, .7, 0))
+plot(10^lx, y, log = "xy", type = "l", col = "purple",
+     main = "Log-Log plot", ylab = yl, xlab = "x")
+plot(10^lx, y, log = "xy", type = "o", pch = ".", col = "forestgreen",
+     main = "Log-Log plot with custom axes", ylab = yl, xlab = "x",
+     axes = FALSE, frame.plot = TRUE)
+my.at <- 10^(1:5)
+axis(1, at = my.at, labels = formatC(my.at, format = "fg"))
+e.y <- -5:-1 ; at.y <- 10^e.y
+axis(2, at = at.y, col.axis = "red", las = 1,
+     labels = as.expression(lapply(e.y, function(E) bquote(10^.(E)))))
+par(op)
 
 #. 상자그림(Box Plot) ----------------------------------------------------------
 
@@ -240,6 +310,7 @@ plot(Ex5.4$weight,Ex5.4$thickness,xlab="무게",ylab="두께",col=ifelse(Ex5.4$m
 x7 = c(2,2,3,3,3,5,7,11,12,15,18)
 boxplot(x7)
 
+?boxplot
 
 
 
@@ -251,17 +322,6 @@ boxplot(x7)
 # ♨ IVF-M HP pH 측정 간소화를 통한 공정시간 단축 및 GMP 리스크 감소
 
 # ☎ 배치별 히스토리 ----
-
-# 데이터 불러오기
-# set Working directory 
-
-dir()
-getwd()
-
-'''
-예시) setwd("D:/#.Secure Work Folder/DX-LSS-Project/BB/DAT")
-wd 에 rds 파일이 있어야 함
-'''
 
 batch = c('HMG19001', 'HMG19002', 'HMG19003', 'HMG19004', 'HMG19005', 'HMG19006', 'HMG19007', 'HMG19008', 'HMG19009', 'HMG19010', 'HMG19011', 'HMG19012', 'HMG19013', 'HMG20001', 'HMG20002', 'HMG20003', 'HMG20004', 'HMG20005', 'HMG20006', 'HMG20007', 'HMG20008', 'HMG20009', 'HMG20010', 'HMG20011', 'HMG20012', 'HMG20013', 'HMG20014', 'HMG20015')
 
