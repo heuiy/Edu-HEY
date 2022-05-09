@@ -151,6 +151,88 @@ install.packages("magrittr")
 
 # ___________________________----
 
+
+# 생명과학본부 2022 GB과정 R실습 
+# Last Modify : 2022. 5. 9
+
+
+# 공정능력분석 -------------------------------------------------------------
+
+
+# 1. 군내 표본수 : n = 5
+# 2. 군의 수  : g = 30
+# 3. 현재의 규격한계 : (LSL, Target, USL) = (15.7, 16.5, 17.3)
+
+
+# 1. ss.study.ca는  SixSigma library에 속한 함수입니다.
+# 2. ss.study.ca함수를 실행하면 Data의 공정능력 결과를 보여줍니다. 
+
+??study.ca
+
+library(SixSigma)
+Ex2.3=read.table("2.3_Measure_ProcessCapability.txt",header=T) 
+ss.study.ca(xST=Ex2.3$Response, LSL = 15.7, USL = 17.3, Target = 16.5)
+
+Ex2.3=read.table("2.3_Measure_ProcessCapability.txt",header=T) 
+ss.study.ca(xST=Ex2.3$Response, USL = 17.3, Target = 16.5)
+
+
+
+
+#  그래프 분석 ---------------------------------------------------------------
+
+#. 파레토(Pareto Chart) ------------------------------------------------------
+
+# ■ pareto.chart는  qcc library 내의 함수입니다.
+# ■ pareto.chart함수를 실행하면 통계 Table과 함께 Pareto chart가 그려집니다.
+
+library(qcc)
+x2=c(33,52,7,5,43,4,3,1,2,6)
+names(x2) =c("A","B","C","D","E","F","G","H","I","M")
+pareto.chart(x2)   
+
+
+#. 히스토그램(Histograms) ------------------------------------------------------
+# ■  hist는  R에 기본으로 내장되어 있는 함수입니다.
+# ■  hist함수를 실행하면 주어진 데이터를 이용하여 히스토그램의 결과를 보여줍니다. 
+
+
+
+Ex5.2=read.csv("5.2_Analyze_histogram.csv")
+
+# 특성치의 분포는 어떤 형태인가? 
+?hist
+hist(Ex5.2$ppm)
+
+
+#. 산점도(scatter plot, Relationship) ----------------------------------------------------------
+# ■  plot는  R에 기본으로 내장되어 있는 함수입니다.
+# ■  plot함수를 실행하면 객체에 대한 그림을 그려줍니다. 
+
+Ex5.4=read.csv("5.4_Analyze_scatter.csv")
+
+?plot
+plot(Ex5.4$weight, Ex5.4$thickness)
+
+plot(Ex5.4$weight,Ex5.4$thickness,xlab="무게",ylab="두께",col=ifelse(Ex5.4$modification=="이전",2,4), pch=19)
+
+
+
+#. 상자그림(Box Plot) ----------------------------------------------------------
+
+# ■ boxplot은  R에 기본으로 내장되어 있는 함수입니다.
+# ■ boxplot 함수를 실행하면 주어진 Data를 이용하여, 상자그림을 작성합니다. 
+
+# 다음과 같이 데이터가 주어졌을때 데이터의 중심과 산포의 모양은?
+x7 = c(2,2,3,3,3,5,7,11,12,15,18)
+boxplot(x7)
+
+
+
+
+
+# ___________________________----
+
 # ♧♣ 실습 01 ----
 
 # ♨ IVF-M HP pH 측정 간소화를 통한 공정시간 단축 및 GMP 리스크 감소
@@ -158,6 +240,15 @@ install.packages("magrittr")
 # ☎ 배치별 히스토리 ----
 
 # 데이터 불러오기
+# set Working directory 
+
+dir()
+getwd()
+
+'''
+예시) setwd("D:/#.Secure Work Folder/DX-LSS-Project/BB/DAT")
+wd 에 rds 파일이 있어야 함
+'''
 
 batch = c('HMG19001', 'HMG19002', 'HMG19003', 'HMG19004', 'HMG19005', 'HMG19006', 'HMG19007', 'HMG19008', 'HMG19009', 'HMG19010', 'HMG19011', 'HMG19012', 'HMG19013', 'HMG20001', 'HMG20002', 'HMG20003', 'HMG20004', 'HMG20005', 'HMG20006', 'HMG20007', 'HMG20008', 'HMG20009', 'HMG20010', 'HMG20011', 'HMG20012', 'HMG20013', 'HMG20014', 'HMG20015')
 
@@ -231,281 +322,4 @@ head(tilt, 3)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
-
-
-# ___________________________----
-
-
-# ♧♣ 실습 02 ----
-
-# ♨ 공정용 소모품 사용 예측 수준 증대를 통한 낭비비용 절감
-
-# ☎ 분석 목적 ----
-
-'''
-아래 질문에 대한 답을 찾기 위함
-
-Q1. 분기별 정보를 추가하세요.
-
-Q2. 21년 7월 합성의약의 소모품 사용이력을 보여주세요.
-
-Q3. 21년 3~7월 QC 팀 소모품 사용이력을 보여주세요.
-
-Q4. 소독액(6가지 품목) 관련 정보만 추출하세요.
-
-Q5. 20년 1분기 QC 팀의 소독액(6가지 품목) 사용량을 확인하세요.
-
-Q6. 21년 2분기 각 팀별 소독액(6가지 품목) 사용량 합계를 구하고 내림차순으로 정렬하세요.
-
-Q7. 21년 2분기 각 팀별 소독액(6가지 품목) 사용량 합계를 한 눈에 비교할 수 있게 그래프로 그리세요.
-'''
-
-
-# 데이터 불러오기
-# set Working directory 
-
-dir()
-getwd()
-
-'''
-예시) setwd("D:/#.Secure Work Folder/DX-LSS-Project/BB/DAT")
-wd 에 rds 파일이 있어야 함
-'''
-
-consume <- readRDS(file = 'consume.rds')
-df <- consume
-
-head(df, 3)
-
-library(dplyr)
-library(tidyverse)
-
-df_new = df %>%
-  gather(key = "Team", value = "Quan", Finished, Substance_1, Substance_2, Complex, QC, Supporting)
-df_new %>% head()
-
-str(df); str(df_new)
-
-# Q1. ----
-# 데이터의 N/A 를 제거하고, 분기별 정보를 추가하세요.
-
-df_new = na.omit(df_new)
-
-df_new <- df_new %>% 
-  mutate(Quarter = ifelse(Month <= 3, 1,
-                   ifelse(Month <= 6, 2,
-                   ifelse(Month <= 9, 3, 4))))
-
-head(df_new); str(df_new)
-
-# Q2. ----
-# 21년 7월 합성의약의 소모품 사용이력을 보여주세요.
-
-df_new %>% filter(.,Year == 21 & Month == 7 & Team == 'Complex')
-
-
-# Q3. ----
-# 21년 3~7월 QC 팀 소모품 사용이력을 보여주세요.
-
-
-
-# Q4. ----
-# 소독액(6가지 품목) 관련 정보만 추출하세요.
-
-disinfect <- df_new %>%
-  filter(Code == '303031' | Code == '303034' | Code == '303038' | Code == '303041' | Code == '303036' | Code == '303060')
-
-# Q5. ----
-# 20년 1분기 QC 팀의 소독액(6가지 품목) 사용량을 확인하세요.
-
-
-
-
-# Q6. ----
-# 21년 2분기 각 팀별 소독액(6가지 품목) 사용량 합계를 구하고 내림차순으로 정렬하세요.
-
-temp <- disinfect %>%
-  filter(Year == 21 & Quarter == 2) %>%
-  group_by(Team) %>%
-  summarise(Q = sum(Quan)) %>%
-  arrange(desc(Q))
-temp
-
-
-# Q7. ----
-# 21년 2분기 각 팀별 소독액(6가지 품목) 사용량 합계를 한 눈에 비교할 수 있게 그래프로 그리세요.
-
-library(ggplot2)
-
-ggplot(data = temp, aes(x = Team,
-                        y = Q,
-                        color = Team)) +
-  geom_point()
-
-ggplot(temp, aes(x = Team,
-                 y = Q,
-                 color = Team)) +
-  geom_col()
-
-# ___________________________----
-
-# ♧♣ Day1 정리 퀴즈 ----
-
-'''
-* 문제 출처 : LG 인화원, 데이터 캠프, 20.08
-
-LGSales 데이터(LGDatasets_Sales.csv)는 2017~2019년 LG전자 베스트샵 판매 정보로 구성되어 있습니다.
-'''
-
-sales = read.csv("LGDatasets_sales.csv")
-
-head(sales, 3)
-
-# Q1. ----
-# LGSales 데이터가 몇 개의 row와 몇 개의 변수로 구성되어 있는지, 어떤 특징을 지닌 변수들로 구성되어 있는지 알아보세요. 하나의 함수만 이용하세요.
-
-
-
-# Q2. ----
-# date_m은 판매월, date_d는 판매일을 나타난 변수입니다. date_m은 month, date_d는 day로 변수명을 수정하세요. 데이터의 일부를 출력하여 변수명이 잘 바뀌었는지 확인해보세요.
-
-
-
-# Q3. ----
-# price는 판매가를 나타낸 변수입니다. price를 미국 달러로 환산한 파생변수를 만드세요. 데이터의 일부를 출력해 변수가 잘 추가되었는지 확인해보세요(1$ = 1164.5원)
-
-
-
-# Q4. ----
-# 판매가가 전체 평균 이상이면 "high", 그 외에는 "low"를 부여한 파생변수를 만드세요.
-
-
-
-# Q5. ----
-# "high"와 "low"에 해당하는 제품 판매량이 얼마나 되는지 빈도표와 빈도 막대 그래프를 만들어 확인해 보세요.
-
-
-
-# Q6. ----
-# "서울" 지역(region)을 추출해서 별도의 데이터를 만드세요.
-
-
-
-# Q7. ----
-# 위에서 추출한 데이터를 이용해서 서울에서 매출(판매가 합계)이 가장 높은 상위 10개 매장이 어디인지 알아보세요.
-
-
-
-
-
-'''
-summarise 함수 안에 요약통계량 구하는 함수 전부 대입하여 활용 가능.
-
-요약통계량 구하는 함수
-
-함수      | 기능
-----------| --------
-mean()    | 평균
-sd()      | 표준편차
-sum()     | 합계
-median()  | 중앙값
-min()     | 최소값
-max()     | 최대값
-n()       | 빈도
-'''
-
-# ___________________________----
-
-# 2일차 교육 시작 ------------------------------------------------------------
-# II Analyze -----------------------------------------------------------------
-
-# ● 선형회귀 분석  ----------------------------------------------------------
-#rm(list=ls())
-#dev.off()
-x=c(3,4,4,6,4,7,9,10,11,11); y=c(11,13,12,19,13,22,28,32,36,32)
-
-
-# ● 의사결정나무  ----------------------------------------------------------
-A=iris
-library( )
-
-
-# 심화학습 
-
-# rpart 패키지의 rpart 함수를 활용한 의사결정 나무 
-# library(rpart) 
-# 분류 회귀 이외 생존나무, 포아송 회귀 나무 생성 가능, 자동 가지치기 등 
-# B = rpart(Species~.,data=A)
-
-# library(rpart.plot)
-# rpart.plot(B)
-
-
-# party 패키지의 ctree함수를 활용한 의사결정 나무 
-# library(party)
-# 반복 분할 방법을 통한 다중 검정으로 과적합 방지
-# B = ctree(Species~.,data=A)
-# plot(B)
-
-
-# evtree 패키지의 evtree함수를 활용한 의사결정 나무 
-# library(evtree)  # 모집단을 초기화, p개의 변수 중 하나를 랜덤 선택, 평가, 반복 
-# B = evtree(Species~.,data=A)
-# plot(B)
-
-
-# ● 랜덤포레스트  ----------------------------------------------------------
-#rm(list=ls())
-library( )
-library( )
-data(cpus)
-
-
-# ● 다중회귀분석  ----------------------------------------------------------
-
-
-# ● 분산팽창지수  ----------------------------------------------------------
-library( )
-
-
-# III improve -----------------------------------------------------------------
-
-# ● MSE, RMSE ----------------------------------------------------------
-#rm(list=ls())
-x=c(3, 4, 4, 6, 4, 7,  9, 10, 11, 11); y=c(11, 13, 12, 19, 13, 22, 28, 32, 36, 32)
-A=lm (y~x);  predict(A)
-library( )
-
-
-# ● confusionMatrix ----------------------------------------------------------
-
-library( )
-B =tree(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width, data=iris)
-
-
-
-# ● ROCR ----------------------------------------------------------
-library( )
- 
-
-# performance(pred,"auc")@y.values
-
-
-# ● 예측결과 ----------------------------------------------------------
-#rm(list=ls())
-x=c(3,4,4,6,4,7,9,10,11,11)
-y=c(11,13,12,19,13,22,28,32,36,32)
-
-temp = data.frame(x,y)
-A=lm(y~x, data=temp)
-
-
-# 다른 방법 
-data.frame(x=5)
-temp2 = data.frame(x=5)
-predict(A, newdata = temp2)
-
-temp2 = data.frame(x=8)
-predict(A, newdata = temp2)
-
 
