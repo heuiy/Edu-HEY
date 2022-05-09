@@ -1,3 +1,16 @@
+# ♧♣ 프로젝트 생성 ----
+
+'''
+R Project: (None) (R Studio 우측 상단) 
+> New Project 
+> Existing Directory 
+> Browse 지정 
+> Create Project 
+> Studio 꺼졌다가 다시 오픈 
+> 우측 상단에 프로젝트(~.Rproj) 생성 (폴더 이름과 동일)
+> 다음에 r 파일이 아닌 프로젝트 오픈 (동일한 실습 환경 유지 가능)
+'''
+
 # ♧♣ 특수기호 ----
 
 '''
