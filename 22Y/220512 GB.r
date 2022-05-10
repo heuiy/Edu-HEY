@@ -1,18 +1,4 @@
-# ♧♣ 프로젝트 생성 ----
-
-'''
-R Project: (None) (R Studio 우측 상단) 
-> New Project 
-> Existing Directory 
-> Browse 지정 
-> Create Project 
-> Studio 꺼졌다가 다시 오픈 
-> 우측 상단에 프로젝트(~.Rproj) 생성 (폴더 이름과 동일)
-> 다음에 r 파일이 아닌 프로젝트 오픈 (동일한 실습 환경 유지 가능)
-'''
-
 # ♧♣ Set Working directory ----
-
 
 '''
 예시) 
@@ -26,67 +12,36 @@ dir() 했을 때 데이터 파일이 있어야함
 그래야 데이터 불러올 수 있음
 '''
 
-# ♧♣ 특수기호 ----
+# ♧♣ 프로젝트 생성 ----
 
 '''
-# ☆ ★ ○ ● ◎ ⊙ ◐ ◑ ◇ ◆ ◈ □ ■ ▣ ▒ ▤▥ ▨ ▧ ▦ ▩ ▷◁ ▶◀ △ ▲ ▽ ▼ ♡ ♥ ♤ ♠ ♧ ♣  → ← ← ↑ ↓ ↔ 〓 ♨ ☏ ☎ ☜ ☞ ¶ † ‡ ↕ ↗ ↙ ↖ ↘ ♭ ♩ ♪ ♬
-# ◁ _ ◁ _ ◁ _ ◁ _ ◁ _ ◁ _ ◁ _ ◁====
-# **************************************--------
+R Project: (None) (R Studio 우측 상단) 
+> New Project 
+> Existing Directory 
+> Browse 지정 
+> Create Project 
+> Studio 꺼졌다가 다시 오픈 
+> 우측 상단에 프로젝트(~.Rproj) 생성 (폴더 이름과 동일)
+> 다음에 r 파일이 아닌 프로젝트 오픈 (동일한 실습 환경 유지 가능)
 '''
-
-# ___________________________----
-
-# ♧♣ 단축키 ----
-
-'''
-Alt +  Shift + k      # 단축키 보기
-Ctrl + Shift + F10    # R 재구동(Session > R restart)
-Ctrl + Shift + C      # 주석 처리 (반복하면 주석 해제)
-                      
-Ctrl + I              # 줄 맞추기
-Ctrl + Alt + <-(->)   # 탭 이동
-Ctrl + 1, Ctrl + 2    # 콘솔창 이동
-Ctrl + Shift + Alt+0  # 4개 창 전부 띄우기
-Ctrl + Shift + 1      # 스크립트 창 확대
-Ctrl + Shift + 2      # 콘솔창 확대
-Ctrl + Shift + 6      # Plot 창 확대
-Alt + <               # 커서 처음
-Alt + >               # 커서 마지막
-Alt + Shift + G       # 특정 라인(2865행) 이동
-Alt + Shift + 상/하   # 해당 라인 복사
-Alt + 상, 하          # 해당 라인 잡고 끌기
-Ctrl + Shift + +      # 화면 확대
-Ctrl + -              # 화면 축소
-  
-Ctrl + Shift + H      # Working Directory 변경
-Ctrl + Shift + R      # Script 목차를 넣기(Code > Insert Section)
-                      # ----, ==== 도 가능
-Alt + L               # 섹션 접기
-Alt + Shift + L       # 섹션 펼치기
-Alt + O               # 모두 접기
-Alt + Shift + O       # 모두 펼치기
-Ctrl + L              # Console 창 삭제
-dev.off()             # Plots 이미지 모두 삭제(아이콘으로 가능)
-Ctrl + Enter          # 실행 (커서 이동)
-Alt + Enter           # 실행 (커서 고정)
-Ctrl + Shift + Enter  # 스크립트 창 전체 코드 실행
-Ctrl + Shift + M      # %>% (파이프 연산자)
-'''  
-
-# ___________________________----
 
 # ♧♣ 환경설정 ----
 
 '''
 > 화면 배치
 - 상단 View → Panes → Pane Layout
+
 > 스크립트 폭 고정
 - 상단 Tools → Global Options → 좌측 Code → Display → "Show margin" 체크
+
 > Soft-wrap
 - 상단 Tools → Global Options → 좌측 Code → Editing → "Soft-wrap R source files" 체크
+
 > 글자 깨짐 현상
 - "Alt + =" (1초 정도 꾹 누르면 됨)
 - 상단 Tools → Global Options → 좌측 Code → 상단 Saving → Default text encoding 옵션을 UTF-8 로 변경
+- File → Reopen with Encoding → UTF-8
+
     ```markdown
     UTF-8, EUC-KR, CP949 모두 한글 인코딩의 종류입니다!
     EUC-KR은 자주 사용되는 글자 2350자만 지원하므로
@@ -104,12 +59,63 @@ Ctrl + Shift + M      # %>% (파이프 연산자)
     Windows의 기본 코드 페이지는 CP949이기 때문에
     cmd, C, C++ 에서는 UTF-8로 인코딩을 할 경우 한글이 깨집니다!
     ```
-- File → Reopen with Encoding → UTF-8
+
 > 배경 테마 변경
 - 상단 Tools → Global Options → 좌측 Appearance → Editor theme → "Pastel on Dark" or "Monokai"
 '''
 
-# ___________________________----
+
+# ♧♣ 특수기호 ----
+
+'''
+# ☆ ★ ○ ● ◎ ⊙ ◐ ◑ ◇ ◆ ◈ □ ■ ▣ ▒ ▤▥ ▨ ▧ ▦ ▩ ▷◁ ▶◀ △ ▲ ▽ ▼ ♡ ♥ ♤ ♠ ♧ ♣  → ← ← ↑ ↓ ↔ 〓 ♨ ☏ ☎ ☜ ☞ ¶ † ‡ ↕ ↗ ↙ ↖ ↘ ♭ ♩ ♪ ♬
+# ◁ _ ◁ _ ◁ _ ◁ _ ◁ _ ◁ _ ◁ _ ◁====
+# **************************************--------
+'''
+
+
+# ♧♣ 단축키 ----
+
+'''
+Alt +  Shift + k      # 단축키 보기
+Ctrl + Shift + F10    # R 재구동(Session > R restart)
+Ctrl + Shift + C      # 주석 처리 (반복하면 주석 해제)
+
+Ctrl + Alt + <-(->)   # 탭 이동
+Ctrl + 1, Ctrl + 2    # Script 창, 콘솔창 이동
+
+Ctrl + Shift + Alt+0  # 4개 창 전부 띄우기
+Ctrl + Shift + 1      # 스크립트 창 확대
+Ctrl + Shift + 2      # 콘솔창 확대
+Ctrl + Shift + 6      # Plot 창 확대
+
+Alt + <               # 커서 처음
+Alt + >               # 커서 마지막
+Alt + Shift + G       # 특정 라인(2865행) 이동
+Alt + Shift + 상/하   # 해당 라인 복사
+Alt + 상, 하          # 해당 라인 잡고 끌기
+
+Ctrl + Shift + +      # 화면 확대
+Ctrl + -              # 화면 축소
+
+Ctrl + Shift + H      # Working Directory 변경
+Ctrl + Shift + R      # Script 목차를 넣기(Code > Insert Section)
+                      # ----, ==== 도 가능
+Alt + L               # 섹션 접기
+Alt + Shift + L       # 섹션 펼치기
+Alt + O               # 모두 접기 (알파벳 O)
+Alt + Shift + O       # 모두 펼치기 (알파벳 O)
+
+Ctrl + L              # Console 창 삭제
+dev.off()             # Plots 이미지 모두 삭제 (device off)
+                      # 빗자루 아이콘으로도 가능
+
+Ctrl + Enter          # 실행 (커서 이동)
+Alt + Enter           # 실행 (커서 고정)
+Ctrl + Shift + Enter  # 스크립트 창 전체 코드 실행
+Ctrl + Shift + M      # %>% (파이프 연산자)
+'''  
+
 
 # ♧♣ 패키지 ----
 
@@ -139,15 +145,18 @@ install.packages("boot")
 install.packages("AER")
 install.packages("tidyverse")
 install.packages("tidyr")
+
 # tidyr 패키지는 tidyverse 패키지의 일부임. tidyverse 패키지 전체를 설치해도 되고 tidyr 패키지만 따로 설치해도 됨.
 install.packages("rmarkdown")
+
 # R 마크다운에 필요함
 install.packages("knitr")
+
 # R 마크다운에 필요함
 install.packages("magrittr")
+
 # %>% 연산자는 따로 import 하지 않고 사용하기 때문에 그냥 dplyr 에 포함된 연산자인가보다라고 생각하지만 사실 magrittr 이라는 패키지에 속해있는 연산자임.
 '''
-
 
 # ___________________________----
 
@@ -160,15 +169,17 @@ install.packages("magrittr")
 
 
 # 1. 군내 표본수 : n = 5
-# 2. 군의 수  : g = 30
+# 2. 군의 수  : g = 30        # 총 150개 샘플
 # 3. 현재의 규격한계 : (LSL, Target, USL) = (15.7, 16.5, 17.3)
 
 
-# 1. ss.study.ca는  SixSigma library에 속한 함수입니다.
+# 1. ss.study.ca는 SixSigma library에 속한 함수입니다.
 # 2. ss.study.ca함수를 실행하면 Data의 공정능력 결과를 보여줍니다. 
 
 
 library(SixSigma)
+# 대문자, 소문자 주의
+
 Ex2.3=read.table("2.3_Measure_ProcessCapability.txt",header=T) 
 ss.study.ca(xST=Ex2.3$Response, LSL = 15.7, USL = 17.3, Target = 16.5)
 
@@ -291,7 +302,7 @@ boxplot(x7)
 
 # ♧♣ 실습 01 ----
 
-# ♨ IVF-M HP pH 적정 ----
+# ♬ IVF-M HP pH 적정 ----
 
 # ☎ 데이터 불러오기 ----
 
@@ -330,12 +341,11 @@ summary(df$before)
 
 # ☎ 공정능력 분석 ----
 
-# ♫ 라이브러리 설치----
+# 라이브러리 설치----
 
 # install.packages("SixSigma")
 
 library(SixSigma)
-# 대문자, 소문자 주의
 
 
 # Q3. ----
@@ -388,7 +398,7 @@ qcc(df$before, type = "xbar.one");
 qcc(df$after, type = "xbar.one")
 
 
-# ♨ NaOH 투입에 따른 pH 적정 ----
+# ♬ NaOH 투입에 따른 pH 적정 ----
 
 # ☎ 데이터 불러오기 ----
 
@@ -433,71 +443,18 @@ geom_line()
 
 # ♧♣ 실습 02 ----
 
-# ♨ IVF-M HP pH 적정 ----
+# ♬ 분말충전 ----
 
 library(dplyr)
 
 number = c(0:57) 
 # 0 ~ 57 총 58개의 행
 
-rty = c(87.0,
-74.6,
-70.9,
-61.0,
-68.9,
-59.2,
-72.9,
-71.0,
-79.9,
-76.1,
-68.8,
-81.0,
-81.6,
-81.7,
-84.6,
-81.4,
-75.6,
-77.6,
-77.4,
-69.7,
-86.8,
-76.4,
-69.5,
-79.4,
-83.6,
-81.9,
-76.0,
-83.5,
-82.7,
-74.8,
-80.8,
-82.1,
-83.0,
-81.6,
-88.3,
-79.3,
-87.2,
-86.1,
-75.7,
-72.3,
-78.9,
-79.1,
-83.2,
-77.8,
-65.4,
-72.7,
-71.8,
-71.8,
-72.1,
-77.7,
-83.8,
-86.4,
-84.1,
-79.5,
-76.9,
-68.0,
-70.3,
-59.3)
+rty = c(87.0,74.6,70.9,61.0,68.9,59.2,72.9,71.0,79.9,76.1,68.8,81.0,
+81.6,81.7,84.6,81.4,75.6,77.6,77.4,69.7,86.8,76.4,69.5,79.4,83.6,
+81.9,76.0,83.5,82.7,74.8,80.8,82.1,83.0,81.6,88.3,79.3,87.2,86.1,
+75.7,72.3,78.9,79.1,83.2,77.8,65.4,72.7,71.8,71.8,72.1,77.7,83.8,
+86.4,84.1,79.5,76.9,68.0,70.3,59.3)
 
 df = data.frame(number, rty)
 head(df, 3)
@@ -537,6 +494,34 @@ mean(df$rty)
 sd(df$rty)
 
 mean(df$rty) - 3*sd(df$rty)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
