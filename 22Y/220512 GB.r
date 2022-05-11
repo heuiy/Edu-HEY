@@ -200,18 +200,19 @@ ss.study.ca(xST=Ex2.3$Response, USL = 17.3, Target = 16.5)
 library(qcc)
 x2=c(33,52,7,5,43,4,3,1,2,6)
 names(x2) =c("A","B","C","D","E","F","G","H","I","M")
-pareto.chart(x2)   
 
 help(c)
 
-??pareto.chart
+pareto.chart(x2)   
 
+# 80% 를 개선하기 위해서는 
+# B, E, A (약 82.1%) 항목에 집중해야 함
+
+??pareto.chart
 
 #. 히스토그램(Histograms) ------------------------------------------------------
 # ■  hist는  R에 기본으로 내장되어 있는 함수입니다.
 # ■  hist함수를 실행하면 주어진 데이터를 이용하여 히스토그램의 결과를 보여줍니다. 
-
-
 
 Ex5.2=read.csv("5.2_Analyze_histogram.csv")
 
@@ -219,22 +220,26 @@ Ex5.2=read.csv("5.2_Analyze_histogram.csv")
 hist(Ex5.2$ppm)
 ?hist
 
+
 op <- par(mfrow = c(2, 2))
 hist(islands)
 utils::str(hist(islands, col = "gray", labels = TRUE))
 
 hist(sqrt(islands), breaks = 12, col = "lightblue", border = "pink")
 ##-- For non-equidistant breaks, counts should NOT be graphed unscaled:
+
 r <- hist(sqrt(islands), breaks = c(4*0:5, 10*3:5, 70, 100, 140),
           col = "blue1")
-text(r$mids, r$density, r$counts, adj = c(.5, -.5), col = "blue3")
-sapply(r[2:3], sum)
-sum(r$density * diff(r$breaks)) # == 1
-lines(r, lty = 3, border = "purple") # -> lines.histogram(*)
-par(op)
 
-hist(x, freq = FALSE, ylim = c(0, 0.2))
-curve(dchisq(x, df = 4), col = 2, lty = 2, lwd = 2, add = TRUE)
+text(r$mids, r$density, r$counts, adj = c(.5, -.5), col = "blue3")
+
+sapply(r[2:3], sum)
+
+sum(r$density * diff(r$breaks)) # == 1
+
+lines(r, lty = 3, border = "purple") # -> lines.histogram(*)
+
+par(op)
 
 #. 산점도(scatter plot, Relationship) ----------------------------------------------------------
 # ■  plot는  R에 기본으로 내장되어 있는 함수입니다.
@@ -246,45 +251,9 @@ plot(Ex5.4$weight, Ex5.4$thickness)
 
 plot(Ex5.4$weight,Ex5.4$thickness,xlab="무게",ylab="두께",col=ifelse(Ex5.4$modification=="이전",2,4), pch=19)
 
-?plot
+??plot
+help(plot)
 
-Speed <- cars$speed
-Distance <- cars$dist
-plot(Speed, Distance, panel.first = grid(8, 8),
-     pch = 0, cex = 1.2, col = "blue")
-plot(Speed, Distance,
-     panel.first = lines(stats::lowess(Speed, Distance), lty = "dashed"),
-     pch = 0, cex = 1.2, col = "blue")
-
-## Show the different plot types
-x <- 0:12
-y <- sin(pi/5 * x)
-op <- par(mfrow = c(3,3), mar = .1+ c(2,2,3,1))
-for (tp in c("p","l","b",  "c","o","h",  "s","S","n")) {
-  plot(y ~ x, type = tp, main = paste0("plot(*, type = \"", tp, "\")"))
-  if(tp == "S") {
-    lines(x, y, type = "s", col = "red", lty = 2)
-    mtext("lines(*, type = \"s\", ...)", col = "red", cex = 0.8)
-  }
-}
-par(op)
-
-##--- Log-Log Plot  with  custom axes
-lx <- seq(1, 5, length.out = 41)
-yl <- expression(e^{-frac(1,2) * {log[10](x)}^2})
-y <- exp(-.5*lx^2)
-op <- par(mfrow = c(2,1), mar = par("mar")-c(1,0,2,0), mgp = c(2, .7, 0))
-plot(10^lx, y, log = "xy", type = "l", col = "purple",
-     main = "Log-Log plot", ylab = yl, xlab = "x")
-plot(10^lx, y, log = "xy", type = "o", pch = ".", col = "forestgreen",
-     main = "Log-Log plot with custom axes", ylab = yl, xlab = "x",
-     axes = FALSE, frame.plot = TRUE)
-my.at <- 10^(1:5)
-axis(1, at = my.at, labels = formatC(my.at, format = "fg"))
-e.y <- -5:-1 ; at.y <- 10^e.y
-axis(2, at = at.y, col.axis = "red", las = 1,
-     labels = as.expression(lapply(e.y, function(E) bquote(10^.(E)))))
-par(op)
 
 #. 상자그림(Box Plot) ----------------------------------------------------------
 
@@ -294,32 +263,51 @@ par(op)
 # 다음과 같이 데이터가 주어졌을때 데이터의 중심과 산포의 모양은?
 x7 = c(2,2,3,3,3,5,7,11,12,15,18)
 boxplot(x7)
+boxplot(x7, horizontal = T)
 
 ?boxplot
 
 
+
 # ___________________________----
 
-# ♧♣ 실습 01 ----
+# ♧♣ Level-up 01 ----
 
 # ♬ 정규성 검정 ----
+
+# 데이터의 정규성은 shapiro.test() 로 간단하게 검증 가능
 
 temp <- rnorm(100, mean = 5, sd = 3)
 hist(temp)
 
 ?rnorm
 
-shapiro.test(temp)
+help(shapiro.test)
 
+'''
+귀무가설 : 데이터가 정규분포를 따른다.
+대립가설 : 데이터가 정규분포를 따르지 않는다.
+
+"정규분포라고 볼 수 있다."
+W, p-value 클수록 정규분포에 가까움
+'''
+
+# Shapiro Wilk test 관련 자료
+# https://www.statskingdom.com/doc_shapiro_wilk.html
 # W, p-value 클수록 정규분포에 가까움
+
+shapiro.test(temp)
 
 # ___________________________----
 
-# ♧♣ 실습 02 ----
+# ♧♣ Level-up 02 ----
 
 # ♬ IVF-M HP pH 적정 ----
 
 # ☎ 데이터 불러오기 ----
+
+  # 조제 중 Buffer Solution 의 pH 적정 데이터
+  # 데이터 출처 : 익산공장 이원도
 
 batch = c('HMG19001', 'HMG19002', 'HMG19003', 'HMG19004', 'HMG19005', 'HMG19006', 'HMG19007', 'HMG19008', 'HMG19009', 'HMG19010', 'HMG19011', 'HMG19012', 'HMG19013', 'HMG20001', 'HMG20002', 'HMG20003', 'HMG20004', 'HMG20005', 'HMG20006', 'HMG20007', 'HMG20008', 'HMG20009', 'HMG20010', 'HMG20011', 'HMG20012', 'HMG20013', 'HMG20014', 'HMG20015')
 
@@ -401,7 +389,6 @@ Zbench
 ??ss.study.ca
 
 
-
 # Q4. ----
 # 적정 전/후의 관리도를 확인하시오.
 
@@ -456,7 +443,7 @@ geom_line()
 
 # ___________________________----
 
-# ♧♣ 실습 03 ----
+# ♧♣ Level-up 03 ----
 
 # ♬ 분말충전 ----
 
@@ -509,33 +496,6 @@ mean(df$rty)
 sd(df$rty)
 
 mean(df$rty) - 3*sd(df$rty)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
