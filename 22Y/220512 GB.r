@@ -497,7 +497,12 @@ sd(df$rty)
 
 mean(df$rty) - 3*sd(df$rty)
 
+# ♧♣ Set Working directory ----
 
+# 그래프 에러날 때 솔루션
+
+par("mar")
+par(mar=c(1,1,1,1))
 
 
 
