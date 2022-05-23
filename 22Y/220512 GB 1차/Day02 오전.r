@@ -525,6 +525,6 @@ ggplot(diamond, aes(x=carat, y=price, size=color, color=color)) +
     geom_point(alpha=0.7) +
     scale_size(range = c(.1, 24), name="Diamond")
 
-
+write.csv(diamond, 'diamond.csv')
 
 
