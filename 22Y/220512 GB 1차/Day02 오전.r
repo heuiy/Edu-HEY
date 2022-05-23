@@ -504,4 +504,27 @@ mean(df$rty) - 3*sd(df$rty)
 par("mar")
 par(mar=c(1,1,1,1))
 
+# ___________________________----
+
+# ♧♣ Level-up 04 ----
+
+# ♬ 버블도 ----
+
+diamond = read.csv('https://raw.githubusercontent.com/heuiy/data_public/main/22_23Y/220512_GB/diamond.csv')
+
+head(diamond, 3)
+
+# Libraries
+library(ggplot2)
+library(dplyr)
+
+ggplot(diamond, aes(x=carat, y=price, size = color)) +
+    geom_point(alpha=0.7)
+
+ggplot(diamond, aes(x=carat, y=price, size=color, color=color)) +
+    geom_point(alpha=0.7) +
+    scale_size(range = c(.1, 24), name="Diamond")
+
+
+
 
